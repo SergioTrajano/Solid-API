@@ -30,6 +30,9 @@ model CheckIn {
   user    User   @relation(references: [id], fields: [user_id])
   user_id String
 
+  gym    Gym    @relation(fields: [gym_id], references: [id])
+  gym_id String
+
   @@map("check_ins")
 }
 
@@ -40,6 +43,8 @@ model Gym {
   phoneNumber String
   latitude    Decimal
   longitude   Decimal
+
+  checkIns CheckIn[]
 
   @@map("gyms")
 }
