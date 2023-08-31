@@ -13,6 +13,12 @@ export async function createUser(req: FastifyRequest, res: FastifyReply) {
 
     const { email, name, password } = bodySchema.parse(req.body);
 
+    const userWithSameEmail = await prisma.user.findUnique({ where: { email } });
+
+    if (userWithSameEmail) {
+        return res.status(409).send();
+    }
+
     const passwordHash = await hash(password, 6);
 
     await prisma.user.create({
