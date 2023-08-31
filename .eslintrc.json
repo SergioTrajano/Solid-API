@@ -9,6 +9,7 @@
                 "singleQuote": false,
                 "semi": true
             }
-        ]
+        ],
+        "no-useless-constructor": "off"
     }
 }
