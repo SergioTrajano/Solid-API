@@ -1,16 +1,23 @@
 import { compare } from "bcryptjs";
-import { describe, expect, test } from "vitest";
+import { beforeEach, describe, expect, test } from "vitest";
 
-import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
-import { UserAlreadyExistsError } from "./errors/user-already-exists-error";
 import { UserService } from "./user-services";
 
-describe("Register user service", () => {
-    test("should be able to register", async () => {
-        const usersRepository = new InMemoryUsersRepository();
-        const userService = new UserService(usersRepository);
+import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 
-        const { user } = await userService.register({
+import { UserAlreadyExistsError } from "./errors/user-already-exists-error";
+
+let usersRepository: InMemoryUsersRepository;
+let sut: UserService;
+
+describe("Register user service", () => {
+    beforeEach(() => {
+        usersRepository = new InMemoryUsersRepository();
+        sut = new UserService(usersRepository);
+    });
+
+    test("should be able to register", async () => {
+        const { user } = await sut.register({
             name: "jhondoe",
             email: "jhon@gmail.com",
             password: "154646816",
@@ -20,10 +27,7 @@ describe("Register user service", () => {
     });
 
     test("should hash user password upon registration", async () => {
-        const usersRepository = new InMemoryUsersRepository();
-        const userService = new UserService(usersRepository);
-
-        const { user } = await userService.register({
+        const { user } = await sut.register({
             name: "jhondoe",
             email: "jhon@gmail.com",
             password: "154646816",
@@ -35,19 +39,16 @@ describe("Register user service", () => {
     });
 
     test("should not be able to register user with same email twice", async () => {
-        const usersRepository = new InMemoryUsersRepository();
-        const userService = new UserService(usersRepository);
-
         const email = "jhon@gmail.com";
 
-        await userService.register({
+        await sut.register({
             name: "jhondoe",
             email,
             password: "154646816",
         });
 
         expect(() =>
-            userService.register({
+            sut.register({
                 name: "jhondoe1",
                 email,
                 password: "15464681681",

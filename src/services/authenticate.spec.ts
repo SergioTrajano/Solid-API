@@ -1,5 +1,5 @@
 import { hash } from "bcryptjs";
-import { describe, expect, test } from "vitest";
+import { beforeEach, describe, expect, test } from "vitest";
 
 import { AuthenticateService } from "./authenticate";
 
@@ -7,11 +7,16 @@ import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-user
 
 import { InvalidCredentialsError } from "./errors/invalid-credentials-error";
 
-describe("Authenticate service", () => {
-    test("should be able to authenticate", async () => {
-        const usersRepository = new InMemoryUsersRepository();
-        const authenticateService = new AuthenticateService(usersRepository);
+let usersRepository: InMemoryUsersRepository;
+let sut: AuthenticateService;
 
+describe("Authenticate service", () => {
+    beforeEach(() => {
+        usersRepository = new InMemoryUsersRepository();
+        sut = new AuthenticateService(usersRepository);
+    });
+
+    test("should be able to authenticate", async () => {
         const hashedPassword = await hash("12345678", 6);
 
         await usersRepository.create({
@@ -20,7 +25,7 @@ describe("Authenticate service", () => {
             password_hash: hashedPassword,
         });
 
-        const { user } = await authenticateService.execute({
+        const { user } = await sut.execute({
             email: "jhondoe@gmail.com",
             password: "12345678",
         });
@@ -29,11 +34,8 @@ describe("Authenticate service", () => {
     });
 
     test("should not be able to authenticate with wrong email", async () => {
-        const usersRepository = new InMemoryUsersRepository();
-        const authenticateService = new AuthenticateService(usersRepository);
-
         expect(() =>
-            authenticateService.execute({
+            sut.execute({
                 email: "jhondoe@gmail.com",
                 password: "12345678",
             })
@@ -41,9 +43,6 @@ describe("Authenticate service", () => {
     });
 
     test("should not be able to authenticate with wrong password", async () => {
-        const usersRepository = new InMemoryUsersRepository();
-        const authenticateService = new AuthenticateService(usersRepository);
-
         const hashedPassword = await hash("12345678", 6);
 
         await usersRepository.create({
@@ -53,7 +52,7 @@ describe("Authenticate service", () => {
         });
 
         expect(() =>
-            authenticateService.execute({
+            sut.execute({
                 email: "jhondoe@gmail.com",
                 password: "wrongPassword",
             })
