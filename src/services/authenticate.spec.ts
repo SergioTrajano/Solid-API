@@ -1,8 +1,11 @@
+import { hash } from "bcryptjs";
 import { describe, expect, test } from "vitest";
 
-import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
-import { hash } from "bcryptjs";
 import { AuthenticateService } from "./authenticate";
+
+import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
+
+import { InvalidCredentialsError } from "./errors/invalid-credentials-error";
 
 describe("Authenticate service", () => {
     test("should be able to authenticate", async () => {
@@ -23,5 +26,17 @@ describe("Authenticate service", () => {
         });
 
         expect(user.id).toEqual(expect.any(String));
+    });
+
+    test("should not be able to authenticate with wrong email", async () => {
+        const usersRepository = new InMemoryUsersRepository();
+        const authenticateService = new AuthenticateService(usersRepository);
+
+        expect(() =>
+            authenticateService.execute({
+                email: "jhondoe@gmail.com",
+                password: "12345678",
+            })
+        ).rejects.toBeInstanceOf(InvalidCredentialsError);
     });
 });
