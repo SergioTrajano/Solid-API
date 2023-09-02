@@ -3,17 +3,17 @@ import { beforeEach, describe, expect, test } from "vitest";
 
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 
-import { GetUserProfile } from "./get-user-profile";
+import { GetUserProfileService } from "./get-user-profile";
 
 import { ResourceNotFoundError } from "./errors/resource-not-found";
 
 let usersRepository: InMemoryUsersRepository;
-let sut: GetUserProfile;
+let sut: GetUserProfileService;
 
 describe("Get user profile service", () => {
     beforeEach(() => {
         usersRepository = new InMemoryUsersRepository();
-        sut = new GetUserProfile(usersRepository);
+        sut = new GetUserProfileService(usersRepository);
     });
 
     test("should be able to get user profile", async () => {
@@ -33,7 +33,7 @@ describe("Get user profile service", () => {
     });
 
     test("should be able to get user profile with wrong id", async () => {
-        expect(() =>
+        await expect(() =>
             sut.execute({
                 userId: "no-existing-id",
             })

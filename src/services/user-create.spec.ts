@@ -47,7 +47,7 @@ describe("Register user service", () => {
             password: "154646816",
         });
 
-        expect(() =>
+        await expect(() =>
             sut.register({
                 name: "jhondoe1",
                 email,
