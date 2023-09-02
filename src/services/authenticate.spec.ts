@@ -39,4 +39,24 @@ describe("Authenticate service", () => {
             })
         ).rejects.toBeInstanceOf(InvalidCredentialsError);
     });
+
+    test("should not be able to authenticate with wrong password", async () => {
+        const usersRepository = new InMemoryUsersRepository();
+        const authenticateService = new AuthenticateService(usersRepository);
+
+        const hashedPassword = await hash("12345678", 6);
+
+        await usersRepository.create({
+            email: "jhondoe@gmail.com",
+            name: "jhondoe",
+            password_hash: hashedPassword,
+        });
+
+        expect(() =>
+            authenticateService.execute({
+                email: "jhondoe@gmail.com",
+                password: "wrongPassword",
+            })
+        ).rejects.toBeInstanceOf(InvalidCredentialsError);
+    });
 });
