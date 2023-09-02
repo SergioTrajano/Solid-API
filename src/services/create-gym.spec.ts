@@ -7,13 +7,13 @@ import { InMemoryGymRepository } from "@/repositories/in-memory/in-memory-gym-re
 let gymRepository: InMemoryGymRepository;
 let sut: CreateGymService;
 
-describe("Get user profile service", () => {
+describe("Create gym service", () => {
     beforeEach(() => {
         gymRepository = new InMemoryGymRepository();
         sut = new CreateGymService(gymRepository);
     });
 
-    test("should be able to get user profile", async () => {
+    test("should be able to create gym", async () => {
         const { gym } = await sut.register({
             description: "",
             title: "Gym",
