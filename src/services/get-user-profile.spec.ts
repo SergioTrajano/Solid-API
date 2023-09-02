@@ -5,6 +5,8 @@ import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-user
 
 import { GetUserProfile } from "./get-user-profile";
 
+import { ResourceNotFoundError } from "./errors/resource-not-found";
+
 let usersRepository: InMemoryUsersRepository;
 let sut: GetUserProfile;
 
@@ -28,5 +30,13 @@ describe("Get user profile service", () => {
         });
 
         expect(user.id).toEqual(id);
+    });
+
+    test("should be able to get user profile with wrong id", async () => {
+        expect(() =>
+            sut.execute({
+                userId: "no-existing-id",
+            })
+        ).rejects.toBeInstanceOf(ResourceNotFoundError);
     });
 });
