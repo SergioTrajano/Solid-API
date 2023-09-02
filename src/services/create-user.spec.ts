@@ -1,7 +1,7 @@
 import { compare } from "bcryptjs";
 import { beforeEach, describe, expect, test } from "vitest";
 
-import { UserService } from "./user-services";
+import { UserService } from "./create-user";
 
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 
