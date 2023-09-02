@@ -10,7 +10,7 @@ interface GetUserProfileServiceResponse {
     user: User;
 }
 
-export class GetUserProfile {
+export class GetUserProfileService {
     constructor(private userRepository: UserRepository) {}
 
     async execute({
