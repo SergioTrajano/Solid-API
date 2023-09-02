@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test } from "vitest";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
 import { InMemoryCheckInRepository } from "@/repositories/in-memory/in-memory-check-in-repository";
 import { CheckInService } from "./check-in";
@@ -10,6 +10,12 @@ describe("Check in service", () => {
     beforeEach(() => {
         checkInRepository = new InMemoryCheckInRepository();
         sut = new CheckInService(checkInRepository);
+
+        vi.useFakeTimers();
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
     });
 
     test("should be able to check in", async () => {
