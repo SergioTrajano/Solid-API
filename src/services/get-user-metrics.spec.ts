@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, test } from "vitest";
 
 import { InMemoryCheckInRepository } from "@/repositories/in-memory/in-memory-check-in-repository";
-import { ResourceNotFoundError } from "./errors/resource-not-found";
 import { GetUserMetricsService } from "./get-user-metrics";
 
 let checkInRepository: InMemoryCheckInRepository;
@@ -26,13 +25,5 @@ describe("Get user metrics service", () => {
         const { checkInCount } = await sut.execute({ userId: "user-1" });
 
         expect(checkInCount).toEqual(2);
-    });
-
-    test.skip("should be able to get user profile with wrong id", async () => {
-        await expect(() =>
-            sut.execute({
-                userId: "no-existing-id",
-            })
-        ).rejects.toBeInstanceOf(ResourceNotFoundError);
     });
 });
