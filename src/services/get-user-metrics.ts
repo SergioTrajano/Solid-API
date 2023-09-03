@@ -1,4 +1,4 @@
-import { InMemoryCheckInRepository } from "@/repositories/in-memory/in-memory-check-in-repository";
+import { CheckInRepository } from "@/repositories/check-ins-repository";
 
 interface GetUserMetricsServiceRequest {
     userId: string;
@@ -9,7 +9,7 @@ interface GetUserMetricsServiceResponse {
 }
 
 export class GetUserMetricsService {
-    constructor(private checkInRepository: InMemoryCheckInRepository) {}
+    constructor(private checkInRepository: CheckInRepository) {}
 
     async execute({
         userId,
