@@ -1,4 +1,4 @@
-import { UserService } from "../user-services";
+import { UserService } from "../create-user";
 
 import { PrismaUserRepositories } from "@/repositories/prisma/prisma-users-repositories";
 
