@@ -28,7 +28,7 @@ describe("Fetch nearby gyms service", () => {
             longitude: -40.51592,
         });
 
-        const { gyms } = await sut.execute({ userLatidude: 28.82561, userLongitude: 104.98472 });
+        const { gyms } = await sut.execute({ userLatitude: 28.82561, userLongitude: 104.98472 });
 
         expect(gyms).toHaveLength(1);
         expect(gyms).toEqual([
