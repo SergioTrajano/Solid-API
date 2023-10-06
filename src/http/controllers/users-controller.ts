@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
-import { makeUserCreateService } from "@/services/factories/make-user-create-service";
+import { makeUserCreateService } from "@/services/factories/make-create-user-service";
 
 import { UserAlreadyExistsError } from "@/services/errors/user-already-exists-error";
 
