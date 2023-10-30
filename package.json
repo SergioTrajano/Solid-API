@@ -15,7 +15,15 @@
         "test:e2e": "vitest run --dir src/http",
         "test:watch": "vitest --dir src/services",
         "test:coverage": "vitest run --coverage",
-        "test:ui": "vitest --ui"
+        "test:ui": "vitest --ui",
+        "kill-db-port": "sudo ss --kill state listening src :5432",
+        "delete-container": "docker compose down",
+        "delete-db": "docker system prune -a",
+        "create-db": "docker compose up -d",
+        "apply-migrations": "npx prisma migrate dev",
+        "initialize-prisma-studio": "npx prisma studio",
+        "initialize-db": "run-s kill-db-port delete-container delete-db create-db",
+        "initialize-prisma": "run-s apply-migrations initialize-prisma-studio"
     },
     "keywords": [],
     "author": "",
