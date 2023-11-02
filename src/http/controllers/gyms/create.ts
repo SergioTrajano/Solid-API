@@ -6,12 +6,12 @@ import { makeCreateGymsService } from "@/services/factories/make-create-gym-serv
 export async function create(req: FastifyRequest, res: FastifyReply) {
     const createGymBodySchema = z.object({
         title: z.string(),
-        description: z.string().email().nullable(),
+        description: z.string().nullable(),
         phone: z.string(),
-        latitude: z.number().refine((value) => {
+        latitude: z.coerce.number().refine((value) => {
             return Math.abs(value) <= 90;
         }),
-        longitude: z.number().refine((value) => {
+        longitude: z.coerce.number().refine((value) => {
             return Math.abs(value) <= 180;
         }),
     });
