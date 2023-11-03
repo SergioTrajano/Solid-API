@@ -40,8 +40,6 @@ describe("Nearby gyms (e2e)", () => {
                 longitude: -14.66197,
             });
 
-        console.log(response.body);
-
         expect(response.statusCode).toEqual(200);
         expect(response.body.gyms).toHaveLength(1);
         expect(response.body.gyms).toEqual([

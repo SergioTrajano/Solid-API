@@ -12,11 +12,9 @@ export async function validate(req: FastifyRequest, res: FastifyReply) {
 
     const validateCheckInService = makeValidateCheckInService();
 
-    const { checkIn } = await validateCheckInService.execute({
+    await validateCheckInService.execute({
         checkInId,
     });
 
-    return res.status(200).send({
-        checkIn,
-    });
+    return res.status(204).send();
 }

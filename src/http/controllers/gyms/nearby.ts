@@ -15,8 +15,6 @@ export async function nearby(req: FastifyRequest, res: FastifyReply) {
 
     const { latitude, longitude } = nearbyGymsQuerySchema.parse(req.query);
 
-    console.log(latitude, longitude);
-
     const fetchNearbyGymsService = makeFetchNearbyGymsService();
 
     const { gyms } = await fetchNearbyGymsService.execute({
